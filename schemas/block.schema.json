@@ -16,7 +16,8 @@
         "blocks": { "$ref": "#/$defs/BlockElement" },
         "timeout": {"type":  "number"}
       },
-      "required": [ "@cls", "blocks", "timeout" ]
+      "required": [ "@cls", "blocks", "timeout" ],
+      "additionalProperties": false
     },
     "CompositionBlock" : {
       "type": "object",
@@ -28,17 +29,45 @@
         ] },
         "bgColor": { "type": "string" }
       },
-      "required": [ "@cls", "blocks", "bgColor" ]
+      "required": [ "@cls", "blocks", "bgColor" ],
+      "additionalProperties": false
     },
     "CtrlButton" : {
+      "type": "object",
       "properties" : {
+        "containerData": {
+          "type": "object",
+          "properties": {
+            "kAARect": { "$ref": "#/$defs/AARect" }
+          }
+        },
         "@cls": { "type": "string", "const": ".Button" }
       },
-      "required": [ "@cls" ]
+      "required": [ "@cls" ],
+      "additionalProperties": false
     },
+
+    "AARect":{
+      "id": "AARect",
+      "type": "object",
+      "properties": {
+        "x": {"type":  "number"},
+        "y": {"type":  "number"},
+        "width": {"type":  "number"},
+        "height": {"type":  "number"},
+        "@cls": {"type":  "string", "const": ".AARect"}
+      },
+      "required": [ "@cls" ],
+      "additionalProperties": false
+    },
+
     "BlockElement" : {
       "discriminator": {
-        "propertyName": "@cls"
+        "propertyName": "@cls",
+        "mapping": {
+          ".Attractor": "#/$defs/AttractorBlock",
+          ".Layered": "#/$defs/CompositionBlock"
+        }
       },
       "oneOf": [
         {"$ref":  "#/$defs/AttractorBlock"},

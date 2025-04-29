@@ -11,10 +11,10 @@ mkdir -p "$PACKAGES_DIR/npm/src"
 mkdir -p "$PACKAGES_DIR/nuget"
 
 echo "Generating TypeScript models for npm..."
-quicktype -s schema "$SCHEMA_DIR/block.schema.json" --lang typescript -o "$PACKAGES_DIR/npm/src/blocks_block.ts"
+quicktype -s schema -o "$PACKAGES_DIR/npm/src/blocks_block.ts" "$SCHEMA_DIR/block.schema.json"
 
 echo "Generating C# models for NuGet..."
-quicktype -s schema "$SCHEMA_DIR/block.schema.json" --lang csharp -o "$PACKAGES_DIR/nuget/BlocksBlock.cs"
+quicktype -s schema -o "$PACKAGES_DIR/nuget/BlocksBlock.cs" "$SCHEMA_DIR/block.schema.json"
 
 
 echo "Code generation complete."
