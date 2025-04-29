@@ -1,0 +1,45 @@
+name: Generate and Publish Packages
+
+on:
+  push:
+    tags:
+      - 'v*'  # triggers on version tags like v1.0.0
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Generate and Publish
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install Quicktype
+        run: npm install -g quicktype
+
+      - name: Generate TypeScript and C# code
+        run: |
+          mkdir -p src/typescript src/dotnet
+          quicktype -s schema schemas/example.schema.json -l typescript -o src/typescript/index.ts
+          quicktype -s schema schemas/example.schema.json -l csharp -o src/dotnet/Models.cs
+
+      - name: Publish to npm
+        working-directory: ./src/typescript
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to NuGet
+        working-directory: ./src/dotnet
+        run: dotnet pack && dotnet nuget push bin/Debug/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
