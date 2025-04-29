@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>NoParking.PixiLab.Blocks.Block</PackageId> <Version>0.0.1</Version> <Authors>Samuel Walz</Authors>
+      <Description>Generated models from JSON Schemas</Description>
+      <RepositoryUrl>https://github.com/wasam-np/bloblo-schema.git</RepositoryUrl>
+      <PackageProjectUrl>https://github.com/wasam-np/bloblo-schema.git</PackageProjectUrl>
+      <PackageTags>json;schema;models;quicktype;newtonsoft</PackageTags>
+      <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      </ItemGroup>
+
+</Project>

@@ -28,11 +28,23 @@ jobs:
       - name: Install Quicktype
         run: npm install -g quicktype
 
-      - name: Generate TypeScript and C# code
+      - name: Generate Models from Schemas
+        run: scripts/generate_models.sh
+
+        # --- NPM Package Steps ---
+      - name: Navigate to npm package directory
+        run: cd packages/npm
+
+      - name: Set npm package version from Git tag (if release)
+        if: startsWith(github.ref, 'refs/tags/v')
         run: |
-          mkdir -p src/typescript src/dotnet
-          quicktype -s schema schemas/example.schema.json -l typescript -o src/typescript/index.ts
-          quicktype -s schema schemas/example.schema.json -l csharp -o src/dotnet/Models.cs
+          cd packages/npm
+          # Extract version from tag (e.g., v1.0.0 -> 1.0.0)
+          PACKAGE_VERSION=${GITHUB_REF/refs\/tags\/v/}
+          npm version $PACKAGE_VERSION --no-git-tag-version # Update package.json
+          echo "NPM package version set to $PACKAGE_VERSION"
+        env:
+          GITHUB_REF: ${{ github.ref }}
 
       - name: Publish to npm
         working-directory: ./src/typescript

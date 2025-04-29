@@ -1,3 +1,57 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema"
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "RootBlock",
+  "type": "object",
+  "properties": {
+    "@cls": { "type": "string", "const": ".RootBlock" },
+    "root": { "$ref": "#/$defs/BlockElement" }
+  },
+  "required": [ "@cls", "root" ],
+  "additionalProperties": false,
+  "$defs": {
+    "AttractorBlock" : {
+      "type": "object",
+      "properties" : {
+        "@cls": { "type": "string", "const": ".Attractor" },
+        "blocks": { "$ref": "#/$defs/BlockElement" },
+        "timeout": {"type":  "number"}
+      },
+      "required": [ "@cls", "blocks", "timeout" ]
+    },
+    "CompositionBlock" : {
+      "type": "object",
+      "properties" : {
+        "@cls": { "type": "string", "const": ".Layered" },
+        "blocks": { "oneOf": [
+          {"$ref":  "#/$defs/BlockElement"},
+          {"$ref":  "#/$defs/ControlElement"}
+        ] },
+        "bgColor": { "type": "string" }
+      },
+      "required": [ "@cls", "blocks", "bgColor" ]
+    },
+    "CtrlButton" : {
+      "properties" : {
+        "@cls": { "type": "string", "const": ".Button" }
+      },
+      "required": [ "@cls" ]
+    },
+    "BlockElement" : {
+      "discriminator": {
+        "propertyName": "@cls"
+      },
+      "oneOf": [
+        {"$ref":  "#/$defs/AttractorBlock"},
+        {"$ref":  "#/$defs/CompositionBlock"}
+      ]
+    },
+    "ControlElement": {
+      "discriminator": {
+        "propertyName": "@cls"
+      },
+      "oneOf": [
+        {"$ref":  "#/$defs/CtrlButton"}
+      ]
+    }
+  }
 }
