@@ -8,19 +8,19 @@ interface RootBlock {
 }
 
 
-interface Element {
-    containerData?: ContainerData,
+interface GenericElement {
+    // containerData?: ContainerData,
 }
-interface BlockElement extends Element {
+interface BlockElement extends GenericElement {
 
 }
 interface ParentBlock extends BlockElement {
     blocks: BlockElement[],
 }
 interface TolerantParentBlock extends BlockElement {
-    blocks: Element[],
+    blocks: GenericElement[],
 }
-interface ControlElement extends Element {
+interface ControlElement extends GenericElement {
 
 }
 
