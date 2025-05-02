@@ -23,3 +23,8 @@
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+
+# npm dir
+/packages/npm/node_modules/
+/packages/npm/dist/
+/packages/npm/src/

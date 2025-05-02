@@ -50,8 +50,14 @@ jobs:
         env:
           GITHUB_REF: ${{ github.ref }}
 
+      - name: Install dependencies and build
+        working-directory: ./packages/npm
+        run: |
+          npm install
+          npm run build
+
       - name: Publish to npm
-        working-directory: ./src/typescript
+        working-directory: ./packages/npm
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

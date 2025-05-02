@@ -2,9 +2,17 @@
   "name": "@nopa/pixilab-blocks-block-types",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/blocks_block.js",
+  "types": "dist/blocks_block.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
   },
   "repository": {
     "type": "git",
