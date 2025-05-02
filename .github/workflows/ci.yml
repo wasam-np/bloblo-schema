@@ -28,6 +28,9 @@ jobs:
       - name: Install Quicktype
         run: npm install -g quicktype
 
+      - name: Make script executable
+        run: chmod +x scripts/generate_models.sh
+
       - name: Generate Models from Schemas
         run: scripts/generate_models.sh
 
